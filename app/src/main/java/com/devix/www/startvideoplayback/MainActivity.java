@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity implements OnTrimVideoListen
     private String videoLenovo = "/storage/sdcard0/dcim/VID_20170712_093839.mp4";
     private String videoSamsung = "/storage/emulated/0/WhatsApp/Media/WhatsApp Video/VID-20170612-WA0019.mp4";
     MediaController mediaController;
-//    private K4LVideoTrimmer mVideoTrimmer;
     private ProgressDialog mProgressDialog;
 
     @Override
@@ -36,34 +35,33 @@ public class MainActivity extends AppCompatActivity implements OnTrimVideoListen
         setContentView(R.layout.activity_main);
         frameLayout = findViewById(R.id.fragmentContainer);
         floatingActionButton = findViewById(R.id.fab);
-        Intent extraIntent = getIntent();
-        String path = "";
 
+
+        Intent extraIntent = getIntent();
+
+        if (extraIntent != null) {
+//            path = extraIntent.getStringExtra(MainActivity.EXTRA_VIDEO_PATH);
+        }
 
         //setting progressbar
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setCancelable(false);
-        mProgressDialog.setMessage("ABC");
+        mProgressDialog.setMessage("Ok");
 
         mVideoTrimmer = ((K4LVideoTrimmer) findViewById(R.id.timeLine));
         if (mVideoTrimmer != null) {
             mVideoTrimmer.setMaxDuration(10);
             mVideoTrimmer.setOnTrimVideoListener(this);
-            //mVideoTrimmer.setDestinationPath("/storage/emulated/0/DCIM/CameraCustom/");
-            mVideoTrimmer.setVideoURI(Uri.parse(path));
             mVideoTrimmer.setOnK4LVideoListener(this);
+            //mVideoTrimmer.setDestinationPath("/storage/emulated/0/DCIM/CameraCustom/");
+            mVideoTrimmer.setVideoURI(Uri.parse(videoLenovo));
             mVideoTrimmer.setVideoInformationVisibility(true);
         }
     }
 
-//    @Override
-//    public void onTrimStarted() {
-//        mProgressDialog.show();
-//    }
-
     @Override
     public void onTrimStarted() {
-
+        mProgressDialog.show();
     }
 
     @Override
@@ -73,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements OnTrimVideoListen
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(MainActivity.this, "yes", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, uri.getPath(), Toast.LENGTH_SHORT).show();
             }
         });
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
@@ -90,21 +88,16 @@ public class MainActivity extends AppCompatActivity implements OnTrimVideoListen
     }
 
     @Override
-    public void onError(String message) {
+    public void onError(final String message) {
+        mProgressDialog.cancel();
 
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
-
-//    @Override
-//    public void onError(final String message) {
-//        mProgressDialog.cancel();
-//
-//        runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
-//                Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
 
     @Override
     public void onVideoPrepared() {
