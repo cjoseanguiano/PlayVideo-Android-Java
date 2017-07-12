@@ -20,7 +20,7 @@ android {
 }
 def supportLibVer = "26.0.0-beta2"
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -28,8 +28,6 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     compile "com.android.support:design:$supportLibVer"
-    compile 'life.knowledge4:k4l-video-trimmer:1.0'
-
-
+    compile project(path: ':k4l-video-trimmerx')
 
 }
