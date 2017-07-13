@@ -24,7 +24,8 @@ public class MainActivity extends AppCompatActivity implements OnTrimVideoListen
     K4LVideoTrimmer k4LVideoTrimmer;
     //TODO https://code.tutsplus.com/es/tutorials/streaming-video-in-android-apps--cms-19888
 
-    private String videoLenovo = "/storage/sdcard0/dcim/VID_20170712_093839.mp4";
+//    private String videoLenovo = "/storage/sdcard0/dcim/VID_20170712_093839.mp4";
+    private String videoLenovo = "/storage/sdcard0/dcim/VID_20170712_181135.mp4";
     private String videoSamsung = "/storage/emulated/0/WhatsApp/Media/WhatsApp Video/VID-20170612-WA0019.mp4";
     MediaController mediaController;
     private ProgressDialog mProgressDialog;
